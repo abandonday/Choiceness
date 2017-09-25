@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_splash"/>
+    
+    <com.zank.choiceness.widget.SimpleButton
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        app:sb_shape="arc"
+        app:sb_text="跳过..."
+        app:sb_auto_check="false"
+        app:sb_bg_color="@color/sb_bg_color"
+        app:sb_border_color="@color/sb_border_color"
+        app:sb_text_color="@color/sb_text_color"
+        />
+
+</FrameLayout>
