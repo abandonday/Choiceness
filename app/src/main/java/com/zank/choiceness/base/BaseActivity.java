@@ -7,12 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zank.choiceness.R;
-import com.zank.choiceness.injector.components.ApplicationComponent;
+import com.zank.choiceness.injector.components.APPComponent;
 import com.zank.choiceness.injector.module.ActivityModule;
 import com.zank.choiceness.utils.SwipeRefreshHelper;
 import com.zank.choiceness.widget.EmptyLayout;
@@ -99,7 +98,7 @@ public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompat
      *
      * @return ApplicationComponent
      */
-    protected ApplicationComponent getAppComponent() {
+    protected APPComponent getAppComponent() {
         return null;
     }
 
