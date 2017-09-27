@@ -10,7 +10,5 @@ import dagger.Component;
  * 提供Activty使用
  */
 
-@Singleton
-@Component
 public class ActivtyComponent {
 }

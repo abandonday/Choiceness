@@ -3,7 +3,7 @@ package com.zank.choiceness.injector.components;
 import android.app.Application;
 import android.content.Context;
 
-import com.zank.choiceness.injector.module.APPModule;
+import com.zank.choiceness.injector.module.AppModule;
 
 import javax.inject.Singleton;
 
@@ -16,14 +16,14 @@ import dagger.Component;
  */
 
 @Singleton
-@Component(modules = APPModule.class)
-public interface APPComponent {
+@Component(modules = AppModule.class)
+public interface AppComponent {
 
     /**
      * 对外公布对象
      */
 
-    Application getApplication();
+    Context getContext();
 
 
 

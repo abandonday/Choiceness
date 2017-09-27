@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.zank.choiceness.R;
-import com.zank.choiceness.injector.components.APPComponent;
+import com.zank.choiceness.injector.components.AppComponent;
 import com.zank.choiceness.utils.SwipeRefreshHelper;
 import com.zank.choiceness.widget.EmptyLayout;
 
@@ -134,7 +134,7 @@ public abstract class BaseFragment<T extends IBasePresenter> extends RxFragment 
      *
      * @return ApplicationComponent
      */
-    protected APPComponent getAppComponent() {
+    protected AppComponent getAppComponent() {
         return null;
     }
 
