@@ -23,7 +23,11 @@ public class AppApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        // initialize最好放在attachBaseContext最前面，初始化直接在Application类里面，切勿封装到其他类
+
+        /**
+         * initialize最好放在attachBaseContext最前面，初始化直接在Application类里面，切勿封装到其他类
+         * 阿里云
+         */
         try {
             SophixManager.getInstance().setContext(this)
                     .setAppVersion(getPackageManager().getPackageInfo(getPackageName(), 0).versionName)
@@ -63,5 +67,8 @@ public class AppApplication extends Application {
         appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
     }
 
+    public static AppComponent getAppcomponent(){
+        return appComponent;
+    }
 
 }

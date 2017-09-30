@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.zank.choiceness.AppApplication;
 import com.zank.choiceness.R;
 import com.zank.choiceness.injector.components.AppComponent;
 import com.zank.choiceness.injector.module.ActivityModule;
@@ -99,7 +100,7 @@ public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompat
      * @return ApplicationComponent
      */
     protected AppComponent getAppComponent() {
-        return null;
+        return AppApplication.getAppcomponent();
     }
 
     /**
@@ -108,7 +109,7 @@ public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompat
      * @return ActivityModule
      */
     protected ActivityModule getActivityModule() {
-        return null;
+        return new ActivityModule(this);
     }
 
     /**
