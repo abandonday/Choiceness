@@ -17,14 +17,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme">
-        <activity android:name=".MainActivity">
+
+        <activity
+            android:name=".SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SplashActivity"></activity>
+
+        <!--configChanges当状态发生改变时调用onConfigruationChanged, orientation|screenSize阻止重启生命周期-->
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
 
 
         <meta-data
