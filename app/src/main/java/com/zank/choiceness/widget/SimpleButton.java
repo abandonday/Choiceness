@@ -20,7 +20,7 @@ import com.zank.choiceness.utils.MeasureUtils;
 
 
 /**
- * Created by long on 2017/3/2.
+ * 自定义View
  * 状态变化的按钮，替换原标签库里的那个，之前写太乱了，而且在列表中使用会出错乱
  */
 public class SimpleButton extends View {
