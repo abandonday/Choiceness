@@ -20,6 +20,8 @@ public class AppApplication extends Application {
 
     private static AppComponent appComponent;
 
+    private static Context mContext;
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -58,6 +60,7 @@ public class AppApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        mContext = getApplicationContext();
         // queryAndLoadNewPatch不可放在attachBaseContext 中，否则无网络权限，建议放在后面任意时刻，如onCreate中
         SophixManager.getInstance().queryAndLoadNewPatch();
         _initInjector();
@@ -69,6 +72,10 @@ public class AppApplication extends Application {
 
     public static AppComponent getAppcomponent(){
         return appComponent;
+    }
+
+    public static Context getContext() {
+        return mContext;
     }
 
 }
