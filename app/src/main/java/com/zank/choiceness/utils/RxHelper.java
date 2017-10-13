@@ -38,6 +38,8 @@ public class RxHelper {
                 })
                 .take(countTime+1) // 限制最多输出多少
                 .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 }
