@@ -10,7 +10,7 @@ import com.taobao.sophix.SophixManager;
 import com.taobao.sophix.listener.PatchLoadStatusListener;
 import com.zank.choiceness.injector.components.AppComponent;
 import com.zank.choiceness.injector.components.DaggerAppComponent;
-import com.zank.choiceness.injector.module.AppModule;
+import com.zank.choiceness.injector.modules.AppModule;
 
 /**
  * Created by Zank on 2017/9/27.
@@ -68,6 +68,10 @@ public class AppApplication extends Application {
 
     private void _initInjector() {
         appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+    }
+
+    public void registerActivityLifecycleCallbacks(Application.ActivityLifecycleCallbacks callback){
+        this.registerActivityLifecycleCallbacks(callback);
     }
 
     public static AppComponent getAppcomponent(){

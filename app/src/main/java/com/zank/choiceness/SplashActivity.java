@@ -1,10 +1,9 @@
 package com.zank.choiceness;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.zank.choiceness.base.BaseActivity;
+import com.zank.choiceness.module.main.MainActivity;
 import com.zank.choiceness.utils.RxHelper;
 import com.zank.choiceness.widget.SimpleButton;
 
@@ -13,7 +12,6 @@ import butterknife.OnClick;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 public class SplashActivity extends BaseActivity {
 

@@ -13,7 +13,7 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.zank.choiceness.AppApplication;
 import com.zank.choiceness.R;
 import com.zank.choiceness.injector.components.AppComponent;
-import com.zank.choiceness.injector.module.ActivityModule;
+import com.zank.choiceness.injector.modules.ActivityModule;
 import com.zank.choiceness.utils.SwipeRefreshHelper;
 import com.zank.choiceness.widget.EmptyLayout;
 

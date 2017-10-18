@@ -2,11 +2,8 @@ package com.zank.choiceness.injector.components;
 
 import android.app.Activity;
 
-import com.zank.choiceness.AppApplication;
 import com.zank.choiceness.injector.ActivtityScope;
-import com.zank.choiceness.injector.module.ActivityModule;
-
-import javax.inject.Singleton;
+import com.zank.choiceness.injector.modules.ActivityModule;
 
 import dagger.Component;
 
@@ -16,7 +13,7 @@ import dagger.Component;
  * 提供Activty使用
  */
 @ActivtityScope
-@Component(dependencies = AppApplication.class, modules = ActivityModule.class)
+@Component(dependencies = AppComponent.class, modules = ActivityModule.class)
 public interface ActivtyComponent {
 
     Activity getActivity();

@@ -1,9 +1,8 @@
 package com.zank.choiceness.injector.components;
 
-import android.app.Application;
 import android.content.Context;
 
-import com.zank.choiceness.injector.module.AppModule;
+import com.zank.choiceness.injector.modules.AppModule;
 
 import javax.inject.Singleton;
 

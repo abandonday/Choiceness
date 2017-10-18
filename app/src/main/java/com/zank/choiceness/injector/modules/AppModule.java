@@ -1,4 +1,4 @@
-package com.zank.choiceness.injector.module;
+package com.zank.choiceness.injector.modules;
 
 import android.content.Context;
 import android.content.SharedPreferences;
