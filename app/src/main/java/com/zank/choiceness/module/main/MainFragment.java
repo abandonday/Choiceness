@@ -14,7 +14,7 @@ import com.zank.choiceness.base.IRxBusPresenter;
 import com.zank.choiceness.entity.NewsTypeInfo;
 import com.zank.choiceness.injector.components.DaggerMainComponent;
 import com.zank.choiceness.injector.modules.MainModule;
-import com.zank.choiceness.module.BlankFragment;
+import com.zank.choiceness.module.news.NewsListFragment;
 import com.zank.choiceness.adapter.ViewPagerAdapter;
 
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ public class MainFragment extends BaseFragment<IRxBusPresenter> implements IMain
         List<String> titles = new ArrayList<>();
         for(NewsTypeInfo typeInfo: newsTypeInfos){
             titles.add(typeInfo.getName());
-            fragments.add(new BlankFragment());
+            fragments.add(NewsListFragment.newInstance(typeInfo.getTypeId()));
         }
         mPagerAdapter.setItems(fragments, titles);
 
