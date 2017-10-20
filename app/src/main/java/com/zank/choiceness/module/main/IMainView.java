@@ -1,5 +1,7 @@
 package com.zank.choiceness.module.main;
 
+import com.zank.choiceness.entity.NewsTypeInfo;
+
 import java.util.List;
 
 /**
@@ -10,5 +12,5 @@ public interface IMainView {
     /**
      * 显示数据
      */
-    void loadData();
+    void loadData(List<NewsTypeInfo> newsTypeInfos);
 }

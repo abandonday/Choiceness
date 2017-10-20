@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.zank.choiceness.R;
 import com.zank.choiceness.base.BaseFragment;
 import com.zank.choiceness.base.IRxBusPresenter;
+import com.zank.choiceness.entity.NewsTypeInfo;
 import com.zank.choiceness.injector.components.DaggerMainComponent;
 import com.zank.choiceness.injector.modules.MainModule;
 import com.zank.choiceness.module.BlankFragment;
@@ -66,19 +67,13 @@ public class MainFragment extends BaseFragment<IRxBusPresenter> implements IMain
     }
 
     @Override
-    public void loadData() {
+    public void loadData(List<NewsTypeInfo> newsTypeInfos) {
         List<Fragment> fragments = new ArrayList<>();
         List<String> titles = new ArrayList<>();
-        fragments.add(new BlankFragment());
-        fragments.add(new BlankFragment());
-        fragments.add(new BlankFragment());
-        fragments.add(new BlankFragment());
-        fragments.add(new BlankFragment());
-        titles.add("头条");
-        titles.add("精选");
-        titles.add("福利");
-        titles.add("轻松一刻");
-        titles.add("政务");
+        for(NewsTypeInfo typeInfo: newsTypeInfos){
+            titles.add(typeInfo.getName());
+            fragments.add(new BlankFragment());
+        }
         mPagerAdapter.setItems(fragments, titles);
 
     }

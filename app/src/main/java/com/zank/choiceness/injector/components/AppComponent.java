@@ -2,6 +2,7 @@ package com.zank.choiceness.injector.components;
 
 import android.content.Context;
 
+import com.zank.choiceness.greendao.DaoSession;
 import com.zank.choiceness.injector.modules.AppModule;
 
 import javax.inject.Singleton;
@@ -23,6 +24,8 @@ public interface AppComponent {
      */
 
     Context getContext();
+
+    DaoSession getDaoSession();
 
 
 

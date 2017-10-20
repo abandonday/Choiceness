@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.zank.choiceness.AppApplication;
+import com.zank.choiceness.greendao.DaoSession;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -19,16 +20,25 @@ import dagger.Provides;
 @Module
 public class AppModule {
 
-    private Context context;
+    private final Context context;
 
-    public AppModule(AppApplication application) {
-        context = application;
+    private final DaoSession mDaoSession;
+
+    public AppModule(AppApplication application, DaoSession mDaoSession) {
+        this.context = application;
+        this.mDaoSession = mDaoSession;
     }
 
     @Singleton
     @Provides
     public Context providerApplication() {
         return context;
+    }
+
+    @Provides
+    @Singleton
+    DaoSession provideDaoSession() {
+        return mDaoSession;
     }
 
     @Singleton

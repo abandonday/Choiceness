@@ -3,11 +3,15 @@ package com.zank.choiceness;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.taobao.sophix.PatchStatus;
 import com.taobao.sophix.SophixManager;
 import com.taobao.sophix.listener.PatchLoadStatusListener;
+import com.zank.choiceness.greendao.DaoMaster;
+import com.zank.choiceness.greendao.DaoSession;
+import com.zank.choiceness.greendao.NewsTypeDao;
 import com.zank.choiceness.injector.components.AppComponent;
 import com.zank.choiceness.injector.components.DaggerAppComponent;
 import com.zank.choiceness.injector.modules.AppModule;
@@ -17,6 +21,10 @@ import com.zank.choiceness.injector.modules.AppModule;
  */
 
 public class AppApplication extends Application {
+
+    private final static String DB_NAME = "choiceness-db";
+
+    private static DaoSession mDaoSession;
 
     private static AppComponent appComponent;
 
@@ -63,11 +71,19 @@ public class AppApplication extends Application {
         mContext = getApplicationContext();
         // queryAndLoadNewPatch不可放在attachBaseContext 中，否则无网络权限，建议放在后面任意时刻，如onCreate中
         SophixManager.getInstance().queryAndLoadNewPatch();
+        _initDatabase();
         _initInjector();
     }
 
     private void _initInjector() {
-        appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+        appComponent = DaggerAppComponent.builder().appModule(new AppModule(this, mDaoSession)).build();
+    }
+
+    private void _initDatabase(){
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, DB_NAME, null);
+        SQLiteDatabase database = helper.getWritableDatabase();
+        mDaoSession = new DaoMaster(database).newSession();
+        NewsTypeDao.updateLocalData(this, mDaoSession);
     }
 
     public void registerActivityLifecycleCallbacks(Application.ActivityLifecycleCallbacks callback){

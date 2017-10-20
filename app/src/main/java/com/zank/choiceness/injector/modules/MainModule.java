@@ -1,10 +1,11 @@
 package com.zank.choiceness.injector.modules;
 
+import com.zank.choiceness.adapter.ViewPagerAdapter;
 import com.zank.choiceness.base.IRxBusPresenter;
+import com.zank.choiceness.greendao.DaoSession;
 import com.zank.choiceness.injector.FragmentScope;
 import com.zank.choiceness.module.main.MainFragment;
 import com.zank.choiceness.module.main.MainPresenter;
-import com.zank.choiceness.adapter.ViewPagerAdapter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -22,8 +23,8 @@ public class MainModule {
 
     @FragmentScope
     @Provides
-    public IRxBusPresenter provideMainPresenter() {
-        return new MainPresenter(mView);
+    public IRxBusPresenter provideMainPresenter(DaoSession daoSession) {
+        return new MainPresenter(mView, daoSession.getNewsTypeInfoDao());
     }
 
     @FragmentScope
