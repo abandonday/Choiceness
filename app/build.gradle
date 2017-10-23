@@ -42,6 +42,7 @@ dependencies {
     compile "com.android.support:support-vector-drawable:${rootProject.ext.support}"
     compile "com.android.support:support-v4:${rootProject.ext.support}"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.32'
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
     compile 'com.jakewharton:butterknife:8.5.1'
     compile 'com.google.dagger:dagger:2.6'

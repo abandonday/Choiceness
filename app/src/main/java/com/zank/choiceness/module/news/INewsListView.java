@@ -1,5 +1,6 @@
 package com.zank.choiceness.module.news;
 
+import com.zank.choiceness.api.bean.NewsInfo;
 import com.zank.choiceness.base.ILoadDataView;
 
 /**
@@ -11,5 +12,5 @@ public interface INewsListView extends ILoadDataView{
     /**
      * 加载广告数据
      */
-    void loadAdData();
+    void loadAdData(NewsInfo newsInfo);
 }

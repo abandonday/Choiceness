@@ -4,14 +4,22 @@ import android.support.annotation.NonNull;
 
 import com.orhanobut.logger.Logger;
 import com.zank.choiceness.AppApplication;
+import com.zank.choiceness.api.bean.NewsInfo;
 import com.zank.choiceness.utils.NetUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
@@ -76,10 +84,18 @@ public class RetrofitService {
     private static final String NEWS_HOST = "http://c.3g.163.com/";
     private static final String WELFARE_HOST = "http://gank.io/";
 
+    private static INewsApi sNewsService;
+
+    // 递增页码
+    private static final int INCREASE_PAGE = 20;
+
     private RetrofitService() {
         throw new AssertionError();
     }
 
+    /**
+     * 初始化网络通信服务
+     */
     public static void init() {
         // 设置缓存，大小100M
         Cache cache = new Cache(new File(AppApplication.getContext().getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
@@ -98,6 +114,8 @@ public class RetrofitService {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(NEWS_HOST)
                 .build();
+
+        sNewsService = retrofit.create(INewsApi.class);
     }
 
     /**
@@ -108,7 +126,7 @@ public class RetrofitService {
         public Response intercept(Chain chain) throws IOException {
             final Request request = chain.request();
             Buffer requestBuffer = new Buffer();
-            if(request.body()!=null){
+            if (request.body() != null) {
                 request.body().writeTo(requestBuffer);
             } else {
                 Logger.d("LogTAG", "request.body() == null");
@@ -136,7 +154,7 @@ public class RetrofitService {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
-            if(!NetUtil.isNetworkAvailable(AppApplication.getContext())){
+            if (!NetUtil.isNetworkAvailable(AppApplication.getContext())) {
                 request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
                 Logger.e("no network");
             }
@@ -156,5 +174,46 @@ public class RetrofitService {
             }
         }
     };
+
+
+    /***************************************** API ************************************************/
+
+
+    /**
+     * 获取新闻列表
+     */
+    public static Observable<NewsInfo> getNewsList(String newsId, int page) {
+        String type;
+        if (newsId.equals(HEAD_LINE_NEWS)) {
+            type = "headline";
+        } else {
+            type = "list";
+        }
+
+        return sNewsService.getNewsList(type, newsId, page * INCREASE_PAGE)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(_flatMapNews(newsId));
+    }
+
+
+    /***************************************** 转换器 ********************************************/
+
+    /**
+     * 类型转换
+     *
+     * @param typeStr 新闻类型
+     * @return
+     */
+    private static Function<Map<String, List<NewsInfo>>, ObservableSource<NewsInfo>> _flatMapNews(final String typeStr) {
+        return new Function<Map<String, List<NewsInfo>>, ObservableSource<NewsInfo>>() {
+            @Override
+            public ObservableSource<NewsInfo> apply(@io.reactivex.annotations.NonNull Map<String, List<NewsInfo>> stringListMap) throws Exception {
+                return Observable.fromIterable(stringListMap.get(typeStr));
+            }
+        };
+    }
 
 }

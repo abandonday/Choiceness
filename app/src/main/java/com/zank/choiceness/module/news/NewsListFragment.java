@@ -9,9 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.orhanobut.logger.Logger;
 import com.zank.choiceness.R;
+import com.zank.choiceness.api.bean.NewsInfo;
 import com.zank.choiceness.base.BaseFragment;
 import com.zank.choiceness.base.IBasePresenter;
+import com.zank.choiceness.injector.components.DaggerNewsListComponent;
+import com.zank.choiceness.injector.modules.NewsListModule;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
@@ -20,10 +27,13 @@ public class NewsListFragment extends BaseFragment<IBasePresenter> implements IN
 
     private static final String NEWS_TYPE_KEY = "NewsTypeKey";
 
-    private String mNewsId;
-
     @BindView(R.id.rv_news_list)
     RecyclerView mRvNewsList;
+
+
+    private String mNewsId;
+
+
 
     public static NewsListFragment newInstance(String newsId){
         NewsListFragment fragment = new NewsListFragment();
@@ -42,13 +52,27 @@ public class NewsListFragment extends BaseFragment<IBasePresenter> implements IN
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
     protected int attachLayoutRes() {
         return R.layout.fragment_news_list;
     }
 
     @Override
     protected void initInjector() {
-
+        DaggerNewsListComponent.builder()
+                .appComponent(getAppComponent())
+                .newsListModule(new NewsListModule(this, mNewsId))
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -58,18 +82,18 @@ public class NewsListFragment extends BaseFragment<IBasePresenter> implements IN
 
     @Override
     protected void updateViews(boolean isRefresh) {
-        Toast.makeText(mContext, mNewsId, Toast.LENGTH_SHORT).show();
+        mPresenter.getData(isRefresh);
     }
 
 
     @Override
     public void loadData(Object data) {
-
+        Logger.d("loadData", data);
     }
 
     @Override
     public void loadMoreData(Object data) {
-
+        Logger.d("loadMoreData", data);
     }
 
     @Override
@@ -78,7 +102,7 @@ public class NewsListFragment extends BaseFragment<IBasePresenter> implements IN
     }
 
     @Override
-    public void loadAdData() {
-
+    public void loadAdData(NewsInfo newsInfo) {
+        Logger.d("loadAdData", newsInfo);
     }
 }

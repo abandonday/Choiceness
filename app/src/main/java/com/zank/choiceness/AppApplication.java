@@ -9,6 +9,7 @@ import android.util.Log;
 import com.taobao.sophix.PatchStatus;
 import com.taobao.sophix.SophixManager;
 import com.taobao.sophix.listener.PatchLoadStatusListener;
+import com.zank.choiceness.api.RetrofitService;
 import com.zank.choiceness.greendao.DaoMaster;
 import com.zank.choiceness.greendao.DaoSession;
 import com.zank.choiceness.greendao.NewsTypeDao;
@@ -73,6 +74,7 @@ public class AppApplication extends Application {
         SophixManager.getInstance().queryAndLoadNewPatch();
         _initDatabase();
         _initInjector();
+        _initConfig();
     }
 
     private void _initInjector() {
@@ -84,6 +86,10 @@ public class AppApplication extends Application {
         SQLiteDatabase database = helper.getWritableDatabase();
         mDaoSession = new DaoMaster(database).newSession();
         NewsTypeDao.updateLocalData(this, mDaoSession);
+    }
+
+    private void _initConfig(){
+        RetrofitService.init();
     }
 
     public void registerActivityLifecycleCallbacks(Application.ActivityLifecycleCallbacks callback){
