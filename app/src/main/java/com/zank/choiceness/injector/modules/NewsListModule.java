@@ -32,8 +32,10 @@ public class NewsListModule {
         return new NewsListPresenter(fragment, mNewsId);
     }
 
+    @FragmentScope
+    @Provides
     public BaseQuickAdapter provideAdapter(){
-        return null;
+        return new NewsMultiListAdapter(fragment.getContext(), null);
     }
 
 }

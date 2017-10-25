@@ -22,6 +22,7 @@ import butterknife.OnClick;
 
 /**
  * Created by Zank on 2017/9/25.
+ * 空布局（主要实现公共提示）
  */
 
 public class EmptyLayout extends FrameLayout{

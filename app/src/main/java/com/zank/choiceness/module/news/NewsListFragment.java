@@ -3,6 +3,7 @@ package com.zank.choiceness.module.news;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +13,14 @@ import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.orhanobut.logger.Logger;
 import com.zank.choiceness.R;
+import com.zank.choiceness.adapter.item.NewsMultiItem;
 import com.zank.choiceness.api.bean.NewsInfo;
 import com.zank.choiceness.base.BaseFragment;
 import com.zank.choiceness.base.IBasePresenter;
 import com.zank.choiceness.injector.components.DaggerNewsListComponent;
 import com.zank.choiceness.injector.modules.NewsListModule;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -30,6 +34,8 @@ public class NewsListFragment extends BaseFragment<IBasePresenter> implements IN
     @BindView(R.id.rv_news_list)
     RecyclerView mRvNewsList;
 
+    @Inject
+    BaseQuickAdapter mAdapter;
 
     private String mNewsId;
 
@@ -77,7 +83,14 @@ public class NewsListFragment extends BaseFragment<IBasePresenter> implements IN
 
     @Override
     protected void initViews() {
-
+        mRvNewsList.setAdapter(mAdapter);
+        mRvNewsList.setLayoutManager(new LinearLayoutManager(mContext));
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                mPresenter.getMoreData();
+            }
+        }, mRvNewsList);
     }
 
     @Override
@@ -87,22 +100,22 @@ public class NewsListFragment extends BaseFragment<IBasePresenter> implements IN
 
 
     @Override
-    public void loadData(Object data) {
-        Logger.d("loadData", data);
+    public void loadData(List<NewsMultiItem> data) {
+        mAdapter.setNewData(data);
     }
 
     @Override
-    public void loadMoreData(Object data) {
-        Logger.d("loadMoreData", data);
+    public void loadMoreData(List<NewsMultiItem> data) {
+        mAdapter.loadMoreComplete();
+        mAdapter.addData(data);
     }
 
     @Override
     public void loadNoData() {
-
     }
 
     @Override
     public void loadAdData(NewsInfo newsInfo) {
-        Logger.d("loadAdData", newsInfo);
+
     }
 }
