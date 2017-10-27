@@ -112,6 +112,7 @@ public class NewsListFragment extends BaseFragment<IBasePresenter> implements IN
 
     @Override
     public void loadNoData() {
+        mAdapter.loadMoreEnd();
     }
 
     @Override
