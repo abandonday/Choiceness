@@ -39,8 +39,6 @@ public class NewsListFragment extends BaseFragment<IBasePresenter> implements IN
 
     private String mNewsId;
 
-
-
     public static NewsListFragment newInstance(String newsId){
         NewsListFragment fragment = new NewsListFragment();
         Bundle bundle = new Bundle();

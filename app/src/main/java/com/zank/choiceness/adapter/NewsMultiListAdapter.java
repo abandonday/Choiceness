@@ -10,6 +10,8 @@ import com.flyco.labelview.LabelView;
 import com.zank.choiceness.R;
 import com.zank.choiceness.adapter.item.NewsMultiItem;
 import com.zank.choiceness.api.bean.NewsInfo;
+import com.zank.choiceness.module.news.article.NewsArticleActivity;
+import com.zank.choiceness.module.news.photoset.PhotoSetActivity;
 import com.zank.choiceness.utils.DefIconFactory;
 import com.zank.choiceness.utils.ImageLoader;
 import com.zank.choiceness.utils.ListUtils;
@@ -86,7 +88,11 @@ public class NewsMultiListAdapter extends BaseMultiItemQuickAdapter<NewsMultiIte
         rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
+                if(NewsUtils.isNewsSpecial(item.getSkipType())){
 
+                } else {
+                    NewsArticleActivity.launch(mContext, item.getPostid());
+                }
             }
         });
     }
@@ -120,7 +126,7 @@ public class NewsMultiListAdapter extends BaseMultiItemQuickAdapter<NewsMultiIte
         rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
-
+                PhotoSetActivity.launch(mContext, item.getPhotosetID());
             }
         });
     }

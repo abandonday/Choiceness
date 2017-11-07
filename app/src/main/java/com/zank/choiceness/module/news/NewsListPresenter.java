@@ -7,7 +7,6 @@ import com.zank.choiceness.api.bean.NewsInfo;
 import com.zank.choiceness.base.IBasePresenter;
 import com.zank.choiceness.utils.NewsUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -122,6 +121,9 @@ public class NewsListPresenter implements IBasePresenter {
                 });
     }
 
+    /**
+     * 统一转换数据
+     */
     ObservableTransformer<NewsInfo,List<NewsMultiItem>> transformer = new ObservableTransformer<NewsInfo, List<NewsMultiItem>>() {
         @Override
         public ObservableSource<List<NewsMultiItem>> apply(@NonNull Observable<NewsInfo> upstream) {

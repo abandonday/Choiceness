@@ -18,6 +18,7 @@ public class SplashActivity extends BaseActivity {
     @BindView(R.id.sb_skip)
     SimpleButton mSbSkip;
 
+
     private boolean mIsSkip = false;
 
     @Override
@@ -37,7 +38,6 @@ public class SplashActivity extends BaseActivity {
                 .subscribe(new Observer() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-
                     }
 
                     @Override
@@ -75,9 +75,9 @@ public class SplashActivity extends BaseActivity {
     private void _doSkip() {
         if (!mIsSkip) {
             mIsSkip = true;
-            finish();
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
             overridePendingTransition(R.anim.hold, R.anim.zoom_in_exit);
+            finish();
         }
     }
 }

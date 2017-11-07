@@ -1,11 +1,16 @@
 package com.zank.choiceness;
 
+import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.util.Log;
 
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
+import com.squareup.leakcanary.LeakCanary;
 import com.taobao.sophix.PatchStatus;
 import com.taobao.sophix.SophixManager;
 import com.taobao.sophix.listener.PatchLoadStatusListener;
@@ -16,6 +21,8 @@ import com.zank.choiceness.greendao.NewsTypeDao;
 import com.zank.choiceness.injector.components.AppComponent;
 import com.zank.choiceness.injector.components.DaggerAppComponent;
 import com.zank.choiceness.injector.modules.AppModule;
+import com.zank.choiceness.utils.CrashHandler;
+import com.zank.choiceness.utils.ToastUtils;
 
 /**
  * Created by Zank on 2017/9/27.
@@ -89,12 +96,20 @@ public class AppApplication extends Application {
     }
 
     private void _initConfig(){
+        if(BuildConfig.DEBUG){
+            LeakCanary.install(this);
+            Logger.addLogAdapter(new AndroidLogAdapter());
+        }
+        CrashHandler.getInstance().init(this);
         RetrofitService.init();
+        ToastUtils.init(this);
+
     }
 
-    public void registerActivityLifecycleCallbacks(Application.ActivityLifecycleCallbacks callback){
-        this.registerActivityLifecycleCallbacks(callback);
-    }
+//    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+//    public void registerActivityLifecycleCallbacks(Application.ActivityLifecycleCallbacks callback){
+//        this.registerActivityLifecycleCallbacks(callback);
+//    }
 
     public static AppComponent getAppcomponent(){
         return appComponent;

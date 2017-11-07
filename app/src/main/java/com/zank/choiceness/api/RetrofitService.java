@@ -4,8 +4,11 @@ import android.support.annotation.NonNull;
 
 import com.orhanobut.logger.Logger;
 import com.zank.choiceness.AppApplication;
+import com.zank.choiceness.api.bean.NewsDetailInfo;
 import com.zank.choiceness.api.bean.NewsInfo;
+import com.zank.choiceness.api.bean.PhotoSetInfo;
 import com.zank.choiceness.utils.NetUtil;
+import com.zank.choiceness.utils.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -189,13 +192,44 @@ public class RetrofitService {
         } else {
             type = "list";
         }
-
         return sNewsService.getNewsList(type, newsId, page * INCREASE_PAGE)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(_flatMapNews(newsId));
+    }
+
+    /**
+     * 获取新闻详情
+     * @param newsId 新闻ID
+     * @return
+     */
+    public static Observable<NewsDetailInfo> getNewsDetail(final String newsId){
+        return sNewsService.getNewsDetail(newsId)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(new Function<Map<String, NewsDetailInfo>, ObservableSource<NewsDetailInfo>>() {
+                    @Override
+                    public ObservableSource<NewsDetailInfo> apply(@io.reactivex.annotations.NonNull Map<String, NewsDetailInfo> stringNewsDetailInfoMap) throws Exception {
+                        return Observable.just(stringNewsDetailInfoMap.get(newsId));
+                    }
+                });
+    }
+
+    /**
+     * 获取图集
+     * @param photoId 图集ID
+     * @return
+     */
+    public static Observable<PhotoSetInfo> getPhotoSet(String photoId) {
+        return sNewsService.getPhotoSet(StringUtils.clipPhotoSetId(photoId))
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
 
